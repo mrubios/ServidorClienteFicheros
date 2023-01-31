@@ -49,24 +49,35 @@ public class ClienteHilo extends Thread {
                 switch (opcion) {
                     case 1:
                         // Le mando al servidor el numero aleatorio
-                        out.writeChars("C:\\Users\\USUARIO\\Desktop");
+                        out.writeChars("D:\\Users\\dam2\\Desktop");
                         // Recibo y muestro el mensaje
                         mensaje = in.readUTF();
                         System.out.println(mensaje);
+                        boolean bucle = true;
+                        while (bucle) {
+                            String string = in.readUTF();
+                            if (string.equals("Salir")) {
+                                bucle = false;
+                            } else {
+                                System.out.println(string);
+                            }
+                        }
                         break;
                     case 2:
-
+                        out.writeChars("D:\\Users\\dam2\\Desktop\\ExamenCarmen.txt");
+                        boolean mientras = true;
+                        while (mientras) {
+                            String string = in.readUTF();
+                            if (string.equals("Salir")) {
+                                mientras = false;
+                            } else {
+                                System.out.println(string);
+                            }
+                        }
+                        mensaje = in.readUTF();
+                        System.out.println(mensaje);
                         break;
                     case 3:
-
-                        break;
-                    case 4:
-
-                        break;
-                    case 5:
-
-                        break;
-                    case 6:
                         salir = !salir;
                         break;
                     default:

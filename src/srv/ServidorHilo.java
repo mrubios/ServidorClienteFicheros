@@ -1,10 +1,7 @@
 package srv;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,15 +29,56 @@ public class ServidorHilo extends Thread {
                 opcion = in.readInt();
                 switch (opcion) {
                     case 1:
+                        String ruta = "";
+                        while (in.available() > 0) {
+
+                            // read character
+                            char c = in.readChar();
+
+                            // print
+                            System.out.print(c);
+                            ruta += c;
+                        }
                         // Recibo el numero aleatorio
-                        File f = new File(in.readLine());
-                        out.writeUTF("Servidor: Numero guardado correctamente");
+                        File f = new File(ruta);
+                        out.writeUTF("Servidor: Mostrada la lista de ficheros");
                         System.out.println("Carpeta: " + f);
-                        System.out.println(f.listFiles());
+                        File[] ficheros = f.listFiles();
+                        for (int x = 0; x < ficheros.length; x++) {
+                            out.writeUTF(ficheros[x].getName());
+                        }
+                        out.writeUTF("Salir");
 
                         break;
 
                     case 2:
+                        String fichero = "";
+                        while (in.available() > 0) {
+
+                            // read character
+                            char c = in.readChar();
+
+                            // print
+                            System.out.print(c);
+                            fichero += c;
+                        }
+                        System.out.println();
+                        // Recibo el numero aleatorio
+                        File file = new File(fichero);
+
+
+                        FileReader fr = new FileReader(file);
+                        BufferedReader br = new BufferedReader(fr);
+
+                        // Lectura del fichero
+                        String linea;
+                        while ((linea = br.readLine()) != null) {
+                            System.out.println(linea);
+                            out.writeUTF(linea);
+                        }
+                        out.writeUTF("Salir");
+                        out.writeUTF("Servidor: Ya se ha leido el fichero");
+
                         break;
 
 
@@ -61,14 +99,4 @@ public class ServidorHilo extends Thread {
 
     }
 
-    public void escribirNumeroAleatorio(File f, int numeroAleatorio) throws IOException {
-
-        FileWriter fw = new FileWriter(f, true);
-        // String datoAFichero = numeroAleatorio + ": "+ nombreCliente + "\n";
-        // System.out.println(datoAFichero);
-        // fw.write(datoAFichero);
-        fw.write(nombreCliente + ": " + numeroAleatorio + "\r\n");
-        fw.close();
-
-    }
 }
